@@ -1,0 +1,93 @@
+timestamp: 2012-03-14T14:23:54.130766
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2012-03-14T14:23:54.286411
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-03-14T14:23:54.408963
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-03-14T14:23:54.523483
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2012-03-14T14:23:54.633258
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-03-14T14:23:54.756288
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2012-03-14T14:23:54.857647
+CREATE TABLE proveedor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre CHAR(512),
+    telefono INTEGER,
+    domicilio CHAR(512),
+    email CHAR(512)
+);
+success!
+timestamp: 2012-03-14T14:23:54.957583
+CREATE TABLE articulo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo CHAR(512),
+    descripcion CHAR(512),
+    cantidad CHAR(512),
+    plista CHAR(512),
+    proveedor INTEGER REFERENCES proveedor(id) ON DELETE CASCADE,
+    uingreso DATE
+);
+success!
+timestamp: 2012-03-14T14:23:55.103657
+CREATE TABLE cliente(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre CHAR(512),
+    rsocial CHAR(512),
+    domicilio CHAR(512),
+    telefono INTEGER
+);
+success!
+timestamp: 2012-03-14T14:23:55.282396
+CREATE TABLE venta(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cliente INTEGER REFERENCES cliente(id) ON DELETE CASCADE,
+    articulo TEXT,
+    total DOUBLE,
+    fventa TIMESTAMP
+);
+success!
